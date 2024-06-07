@@ -11,7 +11,7 @@ import SwiftUI
 struct Tower_of_HanoiApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(viewModel: ViewModel())
         }
     }
 }

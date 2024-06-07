@@ -8,17 +8,19 @@
 import SwiftUI
 
 struct ContentView: View {
+    var viewModel: ViewModel
+    
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            Text("Tower of hanoi")
         }
         .padding()
+        .onAppear(perform: {
+            viewModel.main(n: 4)
+        })
     }
 }
 
 #Preview {
-    ContentView()
+    ContentView(viewModel: ViewModel())
 }
