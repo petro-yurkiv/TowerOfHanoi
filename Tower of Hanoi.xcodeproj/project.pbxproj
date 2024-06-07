@@ -12,6 +12,7 @@
 		52E27AA22C13039B00974B5E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52E27AA12C13039B00974B5E /* Assets.xcassets */; };
 		52E27AA52C13039B00974B5E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52E27AA42C13039B00974B5E /* Preview Assets.xcassets */; };
 		52E27AAE2C13093900974B5E /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E27AAD2C13093900974B5E /* ViewModel.swift */; };
+		52E27AB02C130A7F00974B5E /* Tower.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E27AAF2C130A7F00974B5E /* Tower.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +22,7 @@
 		52E27AA12C13039B00974B5E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		52E27AA42C13039B00974B5E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		52E27AAD2C13093900974B5E /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		52E27AAF2C130A7F00974B5E /* Tower.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tower.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 				52E27A9D2C13039900974B5E /* Tower_of_HanoiApp.swift */,
 				52E27A9F2C13039900974B5E /* ContentView.swift */,
 				52E27AAD2C13093900974B5E /* ViewModel.swift */,
+				52E27AAF2C130A7F00974B5E /* Tower.swift */,
 				52E27AA12C13039B00974B5E /* Assets.xcassets */,
 				52E27AA32C13039B00974B5E /* Preview Content */,
 			);
@@ -143,6 +146,7 @@
 				52E27AA02C13039900974B5E /* ContentView.swift in Sources */,
 				52E27AAE2C13093900974B5E /* ViewModel.swift in Sources */,
 				52E27A9E2C13039900974B5E /* Tower_of_HanoiApp.swift in Sources */,
+				52E27AB02C130A7F00974B5E /* Tower.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,22 +7,40 @@
 
 import Foundation
 
-final class ViewModel {
-    private func hanoi(n: Int, fromRod: String, toRod: String, auxRod: String) {
+final class ViewModel: ObservableObject {
+    @Published var towers: [[Int]] = [[], [], []]
+    
+    init() {
+        resetDisks(3)
+    }
+    
+    func resetDisks(_ count: Int) {
+        towers = [Array(1...count), [], []]
+    }
+    
+    func moveDisk(from: Int, to: Int) {
+        if let disk = towers[from].last {
+            towers[from].removeLast()
+            towers[to].append(disk)
+        }
+        print("towers \(towers)")
+    }
+    
+    private func hanoi(n: Int, fromRod: Int, toRod: Int, auxRod: Int) {
         if n == 1 {
-            print("Move disk 1 from rod \(fromRod) to rod \(toRod)")
+            moveDisk(from: fromRod, to: toRod)
             return
         }
         
         hanoi(n: n - 1, fromRod: fromRod, toRod: auxRod, auxRod: toRod)
-        print("Move disk \(n) from rod \(fromRod) to rod \(toRod)")
+        moveDisk(from: fromRod, to: toRod)
         hanoi(n: n - 1, fromRod: auxRod, toRod: toRod, auxRod: fromRod)
     }
 
     func main(n: Int) {
         if n > 0 {
-            print("The sequence of moves to solve the Tower of Hanoi with \(n) disks is:")
-            hanoi(n: n, fromRod: "A", toRod: "C", auxRod: "B")
+            resetDisks(n)
+            hanoi(n: n, fromRod: 0, toRod: 2, auxRod: 1)
         } else {
             print("Number of disks must be greater than 0.")
         }
