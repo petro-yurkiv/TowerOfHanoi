@@ -9,21 +9,23 @@ import Foundation
 
 final class ViewModel: ObservableObject {
     @Published var towers: [[Int]] = [[], [], []]
+    var moves: [(disk: Int, from: Int, to: Int)] = []
     
     init() {
         resetDisks(3)
     }
     
     func resetDisks(_ count: Int) {
-        towers = [Array(1...count), [], []]
+        towers = [Array(1...count).reversed(), [], []]
+        moves.removeAll()
     }
     
-    func moveDisk(from: Int, to: Int) {
+    private func moveDisk(from: Int, to: Int) {
         if let disk = towers[from].last {
             towers[from].removeLast()
             towers[to].append(disk)
+            moves.append((disk: disk, from: from, to: to))
         }
-        print("towers \(towers)")
     }
     
     private func hanoi(n: Int, fromRod: Int, toRod: Int, auxRod: Int) {
