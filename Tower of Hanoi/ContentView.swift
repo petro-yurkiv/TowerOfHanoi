@@ -77,7 +77,7 @@ struct ContentView: View {
     
     private func startHanoiAnimation(diskCount: Int, geometry: GeometryProxy) {
         viewModel.main(n: diskCount)
-        animateMoves(viewModel.moves, geometry: geometry)
+        animateMoves(viewModel.moves, geometry: geometry, index: 0)
     }
 }
 
@@ -93,7 +93,7 @@ private extension ContentView {
         .frame(height: 200.0)
     }
     
-    func tower(_ geometry: GeometryProxy) -> some View {
+    private func tower(_ geometry: GeometryProxy) -> some View {
         ZStack(alignment: .bottom) {
             Rectangle()
                 .frame(width: 16.0)
@@ -110,7 +110,7 @@ private extension ContentView {
                 RoundedRectangle(cornerRadius: 8.0)
                     .stroke(.black, lineWidth: 1.0)
                     .fill(colors[disk])
-                    .frame(width: towerWidth(geometry) - CGFloat((diskCount - 1 - disk) * 8), height: 26.0)
+                    .frame(width: towerWidth(geometry) - CGFloat((diskCount - 1 - disk) * 12), height: 26.0)
                     .offset(x: positions[disk].width, y: positions[disk].height)
                     .animation(.easeInOut(duration: 0.2), value: positions)
             }
@@ -157,32 +157,35 @@ private extension ContentView {
 private extension ContentView {
     //animation
     
-    private func animateMoves(_ moves: [(disk: Int, from: Int, to: Int)], geometry: GeometryProxy) {
-        for (index, move) in moves.enumerated() {
-            DispatchQueue.main.asyncAfter(deadline: .now() + Double(index) * 0.3) {
-                print("animation start")
-                animateMove(disk: move.disk, from: move.from, to: move.to, geometry: geometry)
-            }
+    private func animateMoves(_ moves: [(disk: Int, from: Int, to: Int)], geometry: GeometryProxy, index: Int) {
+        guard index < moves.count else { return }
+        
+        let move = moves[index]
+        animateMove(disk: move.disk, from: move.from, to: move.to, geometry: geometry) {
+            animateMoves(moves, geometry: geometry, index: index + 1)
         }
     }
     
-    private func animateMove(disk: Int, from: Int, to: Int, geometry: GeometryProxy) {
-        towersHeight[from] = towersHeight[from] - 34.0
+    private func animateMove(disk: Int, from: Int, to: Int, geometry: GeometryProxy, completion: @escaping () -> Void) {
+        towersHeight[from] -= 34.0
         withAnimation(.easeInOut(duration: 0.1)) {
-            positions[disk - 1] = CGSize(width: positions[disk - 1].width, height: -200.0)
+            positions[disk - 1].height = -200.0
         }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            towersHeight[to] = towersHeight[to] + 34.0
+            towersHeight[to] += 34.0
             withAnimation(.easeInOut(duration: 0.1)) {
                 let xOffset = (towerWidth(geometry) + 8) * CGFloat(to - from)
-                positions[disk - 1] = CGSize(width: positions[disk - 1].width + xOffset, height: -200.0)
+                positions[disk - 1].width += xOffset
+                positions[disk - 1].height = -200.0
             }
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 withAnimation(.easeInOut(duration: 0.1)) {
-                    positions[disk - 1] = CGSize(width: positions[disk - 1].width, height: 34.0 * CGFloat(diskCount) - towersHeight[to] - CGFloat(disk - 1) * 34.0)
-                    print("animation finish")
+                    positions[disk - 1].height = 34.0 * CGFloat(diskCount) - towersHeight[to] - CGFloat(disk - 1) * 34.0
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    completion()
                 }
             }
         }
